@@ -1,14 +1,13 @@
 const chai = require("chai");
 const faker = require("faker");
-const app = require("../../app");
 require("mocha");
 // to clear cash memory
 const flush = require("flush-cache");
+
 const { expect, should } = chai;
+const app = require("../../app");
 
 const request = require("supertest").agent(app);
-const { productsData } = require("./../../components/products");
-const { describe } = require("mocha");
 let server;
 
 describe("Create NEW Product POST api/v0/product", () => {
