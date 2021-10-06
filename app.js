@@ -1,4 +1,3 @@
-const http = require("http");
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -37,10 +36,4 @@ app.use(morgan('tiny'))
 // Data sanitization against cross-site scripting (XSS)
 app.use(xxs()) // prevent if code contain html code or js code in body and convert it to symbols known
 
-
-
-const PORT = process.env.PORT || 9000;
-
-http.createServer(app).listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
-});
+module.exports = app;
