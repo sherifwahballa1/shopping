@@ -9,6 +9,7 @@ require("express-async-errors");
 
 const { Error404, Error500 } = require("./modules/global-errors");
 const { productAPI } = require("./components/products");
+const { cartAPI } = require("./components/cart");
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use(morgan("tiny"));
 app.use(xxs()); // prevent if code contain html code or js code in body and convert it to symbols known
 
 app.use("/api/v0/products", productAPI);
+app.use("/api/v0/cart", cartAPI);
 
 app.use(Error404);
 app.use(Error500);

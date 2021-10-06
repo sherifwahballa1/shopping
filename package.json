@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "windowsDebug": "@powershell -Command $env:DEBUG='*';node server.js inspect --port",
-    "test": "mocha --timeout 15000 --exit ./test/product/*.spec.js"
+    "test": "mocha --timeout 15000 --exit ./test/**/*.spec.js"
   },
   "repository": {
     "type": "git",
