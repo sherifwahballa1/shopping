@@ -9,10 +9,9 @@ require("mocha");
 
 const { expect, should } = chai;
 const request = require("supertest").agent(app);
-const { productsData } = require("./../../components/products");
 let server;
 
-describe("Add to List Products POST api/v0/cart/:productId", () => {
+describe("Get Cart list GET api/v0/cart", () => {
   let name = faker.commerce.color();
   let quentity = 1;
   let price = faker.datatype.number({ min: 1, max: 1000 });
@@ -41,7 +40,7 @@ describe("Add to List Products POST api/v0/cart/:productId", () => {
     done();
   });
 
-  describe("Testing Add to List Products POST api/v0/products", () => {
+  describe("Testing Get Cart list Products GET api/v0/cart", () => {
     describe("First Create a Product", () => {
       describe("Create Product", () => {
         let prodInfo = { name, price, quentity };
@@ -60,10 +59,10 @@ describe("Add to List Products POST api/v0/cart/:productId", () => {
       });
     });
 
-    describe("Add product to list and user Not Authorized", () => {
+    describe("Get cart list and user Not Authorized", () => {
       it("without headers", () => {
         return request
-          .post(`/api/v0/cart/${id}`)
+          .get(`/api/v0/cart`)
           .set({})
           .send()
           .then((response) => {
@@ -89,24 +88,22 @@ describe("Add to List Products POST api/v0/cart/:productId", () => {
       });
     });
 
-    describe("Add product to list and product not exists", () => {
-      it("Product not found", () => {
+    describe("Get cart list and cart list empty", () => {
+      it("no products found in cart", () => {
         return request
-          .post(`/api/v0/cart/not-found-product`)
+          .get(`/api/v0/cart`)
           .set({ authorization: userToken })
           .send()
           .then((response) => {
-            expect(response.status).to.equal(404);
+            expect(response.status).to.equal(200);
             expect(response.body)
-              .be.a("object")
-              .to.have.property("message")
-              .to.equal("Product not found");
+              .be.a("object");
           });
       });
     });
 
     describe("Add product to list Successfully", () => {
-      it("Product not found", () => {
+      it("Product", () => {
         return request
           .post(`/api/v0/cart/${id}`)
           .set({ authorization: userToken })
@@ -121,18 +118,15 @@ describe("Add to List Products POST api/v0/cart/:productId", () => {
       });
     });
 
-    describe("Add product to list and Product out of stock", () => {
-      it("Product not found", () => {
+    describe("Get cart list Successfully", () => {
+      it("cart list", () => {
         return request
-          .post(`/api/v0/cart/${id}`)
+          .get(`/api/v0/cart`)
           .set({ authorization: userToken })
           .send()
           .then((response) => {
-            expect(response.status).to.equal(404);
-            expect(response.body)
-              .be.a("object")
-              .to.have.property("message")
-              .to.equal("Product out of stock");
+            expect(response.status).to.equal(200);
+            expect(response.body).be.a("object").to.have.property("list");
           });
       });
     });

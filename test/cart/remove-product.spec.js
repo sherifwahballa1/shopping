@@ -9,10 +9,9 @@ require("mocha");
 
 const { expect, should } = chai;
 const request = require("supertest").agent(app);
-const { productsData } = require("./../../components/products");
 let server;
 
-describe("Add to List Products POST api/v0/cart/:productId", () => {
+describe("Remove produce from Cart list DELETE api/v0/cart/:id", () => {
   let name = faker.commerce.color();
   let quentity = 1;
   let price = faker.datatype.number({ min: 1, max: 1000 });
@@ -41,7 +40,7 @@ describe("Add to List Products POST api/v0/cart/:productId", () => {
     done();
   });
 
-  describe("Testing Add to List Products POST api/v0/products", () => {
+  describe("Testing Remove Cart list Products DELETE api/v0/cart/:id", () => {
     describe("First Create a Product", () => {
       describe("Create Product", () => {
         let prodInfo = { name, price, quentity };
@@ -60,10 +59,10 @@ describe("Add to List Products POST api/v0/cart/:productId", () => {
       });
     });
 
-    describe("Add product to list and user Not Authorized", () => {
+    describe("Delete product from cart list and user Not Authorized", () => {
       it("without headers", () => {
         return request
-          .post(`/api/v0/cart/${id}`)
+          .delete(`/api/v0/cart/${id}`)
           .set({})
           .send()
           .then((response) => {
@@ -77,7 +76,7 @@ describe("Add to List Products POST api/v0/cart/:productId", () => {
 
       it("With unauthorized user", () => {
         return request
-          .post(`/api/v0/cart/${id}`)
+          .delete(`/api/v0/cart/${id}`)
           .send({ authorization: "123" })
           .then((response) => {
             expect(response.status).to.equal(401);
@@ -89,10 +88,10 @@ describe("Add to List Products POST api/v0/cart/:productId", () => {
       });
     });
 
-    describe("Add product to list and product not exists", () => {
-      it("Product not found", () => {
+    describe("Delete product from cart list and cart list empty", () => {
+      it("no product found in cart", () => {
         return request
-          .post(`/api/v0/cart/not-found-product`)
+          .delete(`/api/v0/cart/${id}`)
           .set({ authorization: userToken })
           .send()
           .then((response) => {
@@ -100,13 +99,13 @@ describe("Add to List Products POST api/v0/cart/:productId", () => {
             expect(response.body)
               .be.a("object")
               .to.have.property("message")
-              .to.equal("Product not found");
+              .to.equal("Product not found in cart list");
           });
       });
     });
 
     describe("Add product to list Successfully", () => {
-      it("Product not found", () => {
+      it("Product", () => {
         return request
           .post(`/api/v0/cart/${id}`)
           .set({ authorization: userToken })
@@ -121,18 +120,18 @@ describe("Add to List Products POST api/v0/cart/:productId", () => {
       });
     });
 
-    describe("Add product to list and Product out of stock", () => {
-      it("Product not found", () => {
+    describe("Remove product from cart list Successfully", () => {
+      it("Remove the product", () => {
         return request
-          .post(`/api/v0/cart/${id}`)
+          .delete(`/api/v0/cart/${id}`)
           .set({ authorization: userToken })
           .send()
           .then((response) => {
-            expect(response.status).to.equal(404);
+            expect(response.status).to.equal(200);
             expect(response.body)
               .be.a("object")
               .to.have.property("message")
-              .to.equal("Product out of stock");
+              .to.equal("product deleted successfully from cart list");
           });
       });
     });
