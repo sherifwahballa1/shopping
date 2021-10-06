@@ -29,20 +29,8 @@ const productValidation = {
       "string.pattern.base": `product name must be consists of letters only`,
       "any.required": `product name is required`,
     }),
-
-  quentity: joi.number().min(1).required().messages({
-    "number.base": `quentity must be number and at least 1`,
-    "number.empty": `quentity cannot be an empty field`,
-    "string.min": `quentity should have a minimum {#limit}`,
-    "any.required": `quentity is required`,
-  }),
-
-  price: joi.number().min(1).required().messages({
-    "number.base": `price must be number and at least 1`,
-    "number.empty": `price cannot be an empty field`,
-    "string.min": `price should have a minimum {#limit}`,
-    "any.required": `price is required`,
-  }),
+  quentity: joi.number().integer().min(1).required(),
+  price: joi.number().integer().min(1).required(),
 };
 
 const updateProductValidation = {
@@ -59,19 +47,9 @@ const updateProductValidation = {
       "any.required": `product name is required`,
     }),
 
-  quentity: joi.number().min(1).messages({
-    "number.base": `quentity must be number and at least 1`,
-    "number.empty": `quentity cannot be an empty field`,
-    "string.min": `quentity should have a minimum {#limit}`,
-    "any.required": `quentity is required`,
-  }),
+  quentity: joi.number().integer().min(1),
 
-  price: joi.number().min(1).messages({
-    "number.base": `price must be number and at least 1`,
-    "number.empty": `price cannot be an empty field`,
-    "string.min": `price should have a minimum {#limit}`,
-    "any.required": `price is required`,
-  }),
+  price: joi.number().integer().min(1),
 };
 
 module.exports = {
