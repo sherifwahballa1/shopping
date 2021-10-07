@@ -115,7 +115,7 @@ describe("Remove produce from Cart list DELETE api/v0/cart/:id", () => {
             expect(response.body)
               .be.a("object")
               .to.have.property("message")
-              .to.equal("Product added successfully");
+              .to.equal("Product added successfully into your cart");
           });
       });
     });

@@ -109,7 +109,7 @@ describe("GET Products GET api/v0/products", () => {
                         expect(response.body)
                             .be.a("object")
                             .to.have.property("message")
-                            .to.equal("There are no products")
+                            .to.equal("There are no products available")
                     });
 
             });

@@ -19,7 +19,7 @@ removeFromList = catchAsync(async (req, res) => {
   // product quentity in user cart list
   let prod_quentity = users[userID].cartList[index].quentity;
   /* 
-        in DB the following processes needs consistency 
+        in DB the following processes needs consistency and atomicity 
         we can use Promise.all([]);
         or mongoose.startSession(); && endSession();
     */

@@ -4,7 +4,7 @@ const catchAsync = require("./../../../helper/catchAsync");
 const { pagination: paginationSchema } = require("../validations/validation");
 
 cartList = catchAsync(async (req, res) => {
-  // validate if pagination inputs(pquery) exists
+  // validate if pagination inputs
   let { error, value } = paginationSchema.validate(req.query, {
     stripUnknown: true,
   });
@@ -32,6 +32,7 @@ cartList = catchAsync(async (req, res) => {
 
   let productsInfoInList = [];
   let totalPrice = 0;
+  
   cartListByPage.forEach((el) => {
     totalPrice += productsData[el.productId].price * el.quentity;
     productsInfoInList.push({

@@ -2,7 +2,6 @@ const productsData = require("./../../products/products-data/products");
 const users = require("./../cart-data/cart");
 const catchAsync = require("./../../../helper/catchAsync");
 
-// first check if userId exists (like as authentication) send userId in body
 addToCart = catchAsync(async (req, res) => {
   let productId = req.params.productId;
   let userID = req.userInfo.id;
@@ -17,6 +16,7 @@ addToCart = catchAsync(async (req, res) => {
   if (productsData[productId].quentity <= 0)
     return res.status(404).json({ message: "Product out of stock" });
 
+  // check if the product existing in the user's cart before
   let productExistInCart = users[userID].cartList.findIndex(
     (el) => el.productId === productId
   );
@@ -30,9 +30,10 @@ addToCart = catchAsync(async (req, res) => {
     });
   }
 
+  // decrease the quentity of the product
   productsData[productId].quentity -= 1;
 
-  res.status(200).json({ message: "Product added successfully" });
+  res.status(200).json({ message: "Product added successfully into your cart" });
 });
 
 module.exports = addToCart;

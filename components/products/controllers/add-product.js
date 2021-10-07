@@ -5,6 +5,7 @@ const catchAsync = require('./../../../helper/catchAsync');
 const { productValidationSchema } = require('../validations/validation');
 
 addProduct = catchAsync(async (req, res) => {
+    // validate reuired fields
     let { error, value } = productValidationSchema.validate(req.body, { stripUnknown: true });
     if (error) return res.status(400).json({ message: error.message.replace(/"/g, '') });
 
@@ -13,7 +14,7 @@ addProduct = catchAsync(async (req, res) => {
     value.id = id;
     products[id] = value;
 
-    return res.status(200).send(products[id])
+    return res.status(200).send(products[id]);
 });
 
 module.exports = addProduct;

@@ -116,7 +116,7 @@ describe("Add to List Products POST api/v0/cart/:productId", () => {
             expect(response.body)
               .be.a("object")
               .to.have.property("message")
-              .to.equal("Product added successfully");
+              .to.equal("Product added successfully into your cart");
           });
       });
     });

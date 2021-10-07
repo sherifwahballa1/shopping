@@ -5,7 +5,7 @@ const catchAsync = require('./../../../helper/catchAsync');
 deleteProduct = catchAsync(async (req, res) => {
     let productId = req.params.id;
 
-    // check product exist
+    // check if product not found
     if (!Object.keys(products).includes(productId))
         return res.status(404).json({ message: "Product not found" });
 
